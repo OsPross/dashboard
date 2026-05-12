@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Dashboard",
+  "version": "1.5",
+  "description": "Created by OsPros.",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage",
+    "alarms",
+    "system.cpu",
+    "system.memory",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}

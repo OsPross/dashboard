@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { box-sizing: border-box; }
+        body { background: #080808; color: #ececec; font-family: 'Inter', sans-serif; width: 340px; margin: 0; padding: 0; user-select: none; position: relative; }
+        body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top center, rgba(255,255,255,0.08) 0%, transparent 60%); z-index: -1; pointer-events: none; }
+        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .tabs { display: flex; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 100; }
+        .tab-btn { flex: 1; background: transparent; color: #777; border: none; padding: 16px 0; cursor: pointer; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; outline: none; }
+        .tab-btn.active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); border-bottom: 2px solid #fff; }
+        .tab-content { display: none; padding: 20px; } .tab-content.active { display: block; }
+        .section-title { font-size: 10px; color: #777; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 600; margin-top: 15px; }
+        .card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; margin-bottom: 15px; }
+        label { font-size: 11px; color: #aaa; display: block; margin-bottom: 6px; }
+        input[type="text"], input[type="number"], select { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 10px; border-radius: 8px; outline: none; margin-bottom: 12px; font-size: 12px; }
+        .checkbox-container { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 12px; color: #ccc; cursor: pointer; }
+        input[type="checkbox"] { width: 16px; height: 16px; accent-color: #fff; cursor: pointer; }
+        input[type="color"] { width: 30px; height: 30px; border: none; border-radius: 4px; cursor: pointer; padding: 0; background: transparent; }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; }
+        .color-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .swatches { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .swatch { width: 26px; height: 26px; border-radius: 6px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: 0.2s; }
+        .swatch.active { border-color: #fff; transform: scale(1.05); }
+        .file-upload { display: flex; gap: 10px; margin-bottom: 10px; }
+        .file-btn { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ddd; text-align: center; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 11px; text-transform: uppercase; font-weight: 500; transition: 0.2s; }
+        input[type="file"] { display: none; }
+        .slider-group { margin-bottom: 12px; } .slider-group label { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; margin-bottom: 5px; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #fff; cursor: pointer; }
+        #aliases-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; max-height: 140px; overflow-y: auto; padding-right: 4px; }
+        .alias-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 6px; font-size: 11px; }
+        .del-alias { background: transparent; border: none; color: #ff4444; cursor: pointer; font-weight: bold; padding: 4px; }
+        button.action-btn { width: 100%; background: rgba(255,255,255,0.9); color: #000; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 11px; font-weight: 700; text-transform: uppercase; transition: 0.2s; }
+        button.danger-btn { width: 100%; background: transparent; color: #ff4444; border: 1px solid rgba(255, 68, 68, 0.3); padding: 10px; border-radius: 8px; cursor: pointer; font-size: 11px; text-transform: uppercase; font-weight: 600; margin-bottom: 5px; transition: 0.2s; }
+        button.danger-btn:hover { background: rgba(255, 68, 68, 0.1); }
+    </style>
+</head>
+<body>
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="wyglad">Wygląd</button>
+        <button class="tab-btn" data-tab="system">System</button>
+    </div>
+    
+    <div id="wyglad" class="tab-content active">
+        <div class="section-title" style="margin-top:0;">Tło</div>
+        <div class="card">
+            <div class="swatches">
+                <div class="swatch" data-color="#000000" style="background:#000000;"></div>
+                <div class="swatch" data-color="#0a0f14" style="background:#0a0f14;"></div>
+                <div class="swatch" data-color="#141414" style="background:#141414;"></div>
+                <div class="swatch" data-color="#1c1614" style="background:#1c1614;"></div>
+                <div class="swatch" data-color="#0d1117" style="background:#0d1117;"></div>
+            </div>
+            <div class="file-upload">
+                <label for="media-upload" class="file-btn">Wgraj Plik</label>
+                <input type="file" id="media-upload" accept="image/*,video/mp4,video/webm">
+            </div>
+            <button class="danger-btn" id="clear-bg">Usuń Media</button>
+        </div>
+
+        <div class="section-title">Kolory Tekstu</div>
+        <div class="card">
+            <div class="color-row">
+                <label style="margin:0;">Zegar</label>
+                <input type="color" id="clock-color" value="#dddddd">
+            </div>
+            <div class="color-row">
+                <label style="margin:0;">Górny Pasek</label>
+                <input type="color" id="topbar-color" value="#666666">
+            </div>
+            <div class="color-row">
+                <label style="margin:0;">Cytat Motywacyjny</label>
+                <input type="color" id="quote-color" value="#444444">
+            </div>
+        </div>
+
+        <div class="section-title">Tryby Specjalne</div>
+        <div class="card">
+            <label class="checkbox-container"><input type="checkbox" id="rage-mode"> Rage Mode (Niszcz interfejs)</label>
+            <label class="checkbox-container"><input type="checkbox" id="glitch-effect"> Efekt Glitch (Losowe błędy)</label>
+            <label class="checkbox-container" style="margin-bottom:0;"><input type="checkbox" id="particles-bg"> Interaktywne tło (Cząsteczki)</label>
+        </div>
+
+        <div class="section-title">Skalowanie i Filtry</div>
+        <div class="card" style="margin-bottom: 0;">
+            <div class="slider-group"><label>Zegar</label><input type="range" id="clock-scale" min="0.5" max="2" step="0.1" value="1"></div>
+            <div class="slider-group"><label>Pogoda / Top</label><input type="range" id="topbar-scale" min="0.5" max="2" step="0.1" value="1"></div>
+            <div class="slider-group"><label>Przyciemnienie Tła</label><input type="range" id="dim-slider" min="0" max="9" value="0"></div>
+            <div class="slider-group"><label>Rozmycie Tła</label><input type="range" id="blur-slider" min="0" max="20" value="0"></div>
+        </div>
+    </div>
+    
+    <div id="system" class="tab-content">
+        <div class="section-title" style="margin-top:0;">Licznik Biedy (Hajs)</div>
+        <div class="card">
+            <label>Rodzaj wprowadzanej kwoty</label>
+            <select id="rate-type">
+                <option value="hourly">Stawka Godzinowa (PLN/h)</option>
+                <option value="monthly">Wypłata Miesięczna (PLN/msc)</option>
+            </select>
+            <input type="number" id="rate-value" placeholder="np. 50 (h) lub 8400 (msc)" min="1" step="1">
+            <span style="font-size: 9px; color: #666; display: block; margin-bottom: 15px;">(Miesięczna przelicza się jako 168h pracujących)</span>
+            
+            <button class="danger-btn" id="reset-poverty" style="margin: 0;">Wyzeruj Hajs (Rozgrzeszenie)</button>
+        </div>
+
+        <div class="section-title">Doomscroll Blocker</div>
+        <div class="card">
+            <label class="checkbox-container"><input type="checkbox" id="work-mode"> <strong style="color:#ff4444;">Aktywuj Blokadę Pracy</strong></label>
+            <label style="margin-top:10px;">Czarna lista domen (po przecinku)</label>
+            <input type="text" id="blacklist" placeholder="facebook.com, tiktok.com" style="margin-bottom:0;">
+        </div>
+
+        <div class="section-title">Panic Button</div>
+        <div class="card">
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="panic-key" placeholder="Klawisz" maxlength="1" style="width: 30%; text-align: center; margin: 0;">
+                <input type="text" id="panic-url" placeholder="URL (np. google.com)" style="width: 70%; margin: 0;">
+            </div>
+        </div>
+        
+        <div class="section-title">Informacje Główne</div>
+        <div class="card">
+            <label>Miasto (Pogoda)</label>
+            <input type="text" id="city" placeholder="np. Rawicz">
+            <label class="checkbox-container"><input type="checkbox" id="format24"> Zegar 24-godzinny</label>
+        </div>
+        
+        <div class="section-title">Customowe Aliasy (!)</div>
+        <div class="card">
+            <div id="aliases-list"></div>
+            <div style="display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
+                <input type="text" id="new-alias-cmd" placeholder="Skrót (np. fb)" style="margin:0;">
+                <input type="text" id="new-alias-url" placeholder="URL (np. fb.com/search?q=)" style="margin:0;">
+                <button id="add-alias-btn" class="action-btn" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); margin-top:0;">Dodaj Alias</button>
+            </div>
+        </div>
+        <button class="action-btn" id="save">Zapisz Ustawienia</button>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

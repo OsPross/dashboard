@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <video id="bg-video" autoplay loop muted playsinline></video>
+    <div id="bg-image"></div>
+    <div id="bg-overlay"></div>
+    <canvas id="particles"></canvas>
+
+    <div id="blocked-alert" style="display:none;">WYPIERDALAJ DO ROBOTY.</div>
+
+    <div id="onboarding">
+        <h1 class="void-logo">Dashboard</h1>
+        <p class="void-hint">wciśnij 'S' żeby szukać. opcje w prawym górnym rogu.</p>
+    </div>
+
+    <div class="top-bar" id="top-bar-container">
+        <div class="top-left">
+            <span id="sys-stats">SYSTEM: --</span>
+        </div>
+        <div class="top-center">
+            <div id="tab-control" title="Kliknij, żeby zarządzać syfem">
+                <span id="tab-count">KARTY: --</span>
+            </div>
+        </div>
+        <div class="top-right">
+            <span id="weather">--°C</span> &nbsp;&middot;&nbsp; <span id="date">--/--</span>
+        </div>
+    </div>
+
+    <div id="poverty-panel" class="rage-target">
+        <div id="pov-handle"><span id="pov-handle-text">PRZEJEBANE: 0.00 PLN</span></div>
+        <div class="pov-content">
+            <h3>LICZNIK BIEDY</h3>
+            <div class="pov-rate">Stawka: <span id="pov-rate-val">--</span> PLN/h</div>
+            
+            <div class="pov-box">
+                <span class="pov-label">PRZEJEBANE DZISIAJ:</span>
+                <span class="pov-value" id="pov-today">0.0000 PLN</span>
+            </div>
+            
+            <div class="pov-box" style="border-color: rgba(255, 68, 68, 0.3);">
+                <span class="pov-label">PRZEJEBANE ŁĄCZNIE:</span>
+                <span class="pov-value total" id="pov-total">0.00 PLN</span>
+            </div>
+
+            <div id="pov-items">
+                <div class="pov-label" style="margin-bottom: 8px; color: #888;">MOGŁEŚ ZA TO MIEĆ:</div>
+                <ul id="pov-list">
+                    </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="center-content">
+        <div id="greeting"></div>
+        <h1 id="clock" class="rage-target">00:00</h1>
+        <div id="motivational-quote" class="rage-target"></div>
+        
+        <div class="search-container rage-target">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 21L16.65 16.65" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <input type="text" id="search" placeholder="szukaj..." autocomplete="off" autofocus>
+            <div id="dropdown-box"></div>
+        </div>
+    </div>
+
+    <div id="help-btn">?</div>
+    <div id="help-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Skróty Void</h2>
+            <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin:0; padding:0; list-style:none;">
+                <li><kbd>!yt</kbd> <span style="color:#888; font-size:13px;">YouTube</span></li>
+                <li><kbd>!r</kbd> <span style="color:#888; font-size:13px;">Reddit</span></li>
+                <li><kbd>!g</kbd> <span style="color:#888; font-size:13px;">Gemini</span></li>
+                <li><kbd>!gpt</kbd> <span style="color:#888; font-size:13px;">ChatGPT</span></li>
+                <li><kbd>!w</kbd> <span style="color:#888; font-size:13px;">Wikipedia</span></li>
+                <li><kbd>!ale</kbd> <span style="color:#888; font-size:13px;">Allegro</span></li>
+                <li><kbd>!ali</kbd> <span style="color:#888; font-size:13px;">AliExpress</span></li>
+                <li><kbd>!ama</kbd> <span style="color:#888; font-size:13px;">Amazon</span></li>
+                <li><kbd>ESC</kbd> <span style="color:#888; font-size:13px;">Zamknij</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="tab-manager-modal" class="modal-overlay">
+        <div class="modal-content tm-content">
+            <h2>OTWARTY SYF <span id="close-tm">✕</span></h2>
+            <div id="tab-tree-container">Ladowanie...</div>
+            <button id="nuke-btn-real">ZNUUKUJ WSZYSTKO (NUKE)</button>
+        </div>
+    </div>
+
+    <div id="scratchpad-container" class="rage-target">
+        <div id="scratch-handle">NOTATKI</div>
+        <textarea id="scratchpad" placeholder="Wpisz tu jakieś gówno..."></textarea>
+    </div>
+    
+    <div id="doom-container" class="rage-target">
+        <span id="doom-text">0% ZMARNOWANE</span>
+        <div id="doom-bar">
+            <div id="doom-fill"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
